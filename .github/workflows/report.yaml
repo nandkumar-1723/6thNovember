@@ -3,6 +3,9 @@ name: daily report
 on:
   schedule:
     - cron: '1 * * * *'
+  push:
+    branches:
+      - main  # Change this to your default branch name if needed
 
 jobs:
   my-job:
@@ -10,4 +13,3 @@ jobs:
     steps:
       - name: first-step
         run: echo "hello nandkumar"
-
