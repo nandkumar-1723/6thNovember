@@ -2,12 +2,14 @@ name: daily report
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Run every 2 minutes
+    - cron: '*/2 * * * *'  # Run every two minutes
+  push:
+    branches:
+      - main  # Change this to your default branch name if needed
+
 jobs:
   my-job:
     runs-on: ubuntu-latest
     steps:
       - name: first-step
-        run: echo "hello nandkumar Babar"
-
-
+        run: echo "hello nandkumar"
