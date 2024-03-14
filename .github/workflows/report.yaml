@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main  # Change this to your default branch name if needed
-
 jobs:
   my-job:
     runs-on: ubuntu-latest
