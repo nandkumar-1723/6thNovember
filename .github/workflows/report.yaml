@@ -22,7 +22,7 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 587
           username: arise.arise1009@gmail.com
-          password: Arise@1009
+          password: ${{ secrets.SMTP_PASSWORD }}
           from: arise.arise1009@gmail.com
           subject: 'GitHub Actions Job Passed Successfully'
           body: 'Your GitHub Actions job passed successfully.'
