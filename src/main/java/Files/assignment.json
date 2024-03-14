@@ -1,0 +1,33 @@
+{
+  "tag": "post",
+  "body": {
+    "patient": {
+      "site": [
+        {
+          "code": "string",
+          "mrn": "string"
+        }
+      ],
+      "email": [
+        "string"
+      ],
+      "addresses": [
+        {
+          "line1": "string",
+          "line2": "string",
+          "city": "string",
+          "state": "string",
+          "postalCode": "string"
+        }
+      ],
+      "names": [
+        {
+          "first": "string",
+          "middle": "string",
+          "last": "string",
+          "suffix": "string"
+        }
+      ]
+    }
+  }
+}
