@@ -2,7 +2,7 @@ name: daily report
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Run every two minutes
+    - cron: '50 18 * * *'  # Run every two minutes
   push:
     branches:
       - main  # Change this to your default branch name if needed
