@@ -2,7 +2,7 @@ name: daily report
 
 on:
   schedule:
-    - cron: '50 18 * * *'  # Run every two minutes
+    - cron: '*/3 * * * *'  # Run every two minutes
   push:
     branches:
       - main  # Change this to your default branch name if needed
@@ -13,5 +13,3 @@ jobs:
     steps:
       - name: first-step
         run: echo "hello nandkumar Babar"
-
-
