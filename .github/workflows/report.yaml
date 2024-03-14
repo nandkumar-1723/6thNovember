@@ -2,7 +2,7 @@ name: daily report
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # Run every two minutes
+    - cron: '0 4 * * *'  # Run every day at 4:00 AM
   push:
     branches:
       - main  # Change this to your default branch name if needed
@@ -13,3 +13,16 @@ jobs:
     steps:
       - name: first-step
         run: echo "hello nandkumar Babar"
+
+      # Send email notification when the job passes
+      - name: Send email on success
+        if: ${{ always() }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: arise.arise1009@gmail.com
+          password: Arise@1009
+          subject: 'GitHub Actions Job Passed Successfully'
+          body: 'Your GitHub Actions job passed successfully.'
+          to: your-email@example.com
