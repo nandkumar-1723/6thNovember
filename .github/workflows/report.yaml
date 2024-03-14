@@ -2,10 +2,11 @@ name: daily report
 
 on:
   schedule:
-    - cron: '45 18 * * 1-7'  # Run every two minutes
+    - cron: '*/10 * * * *'  # Run every two minutes
   push:
     branches:
       - main  # Change this to your default branch name if needed
+
 jobs:
   my-job:
     runs-on: ubuntu-latest
