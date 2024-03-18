@@ -1,4 +1,4 @@
-name: daily report
+name: daily report on test branch
 
 on:
   schedule:
