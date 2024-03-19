@@ -1,0 +1,11 @@
+{
+  "fields": {
+    "project": {
+      "key": "AM"
+    },
+    "summary": "Adding the user story on 19th march",
+    "issuetype": {
+      "name": "Story"
+    }
+  }
+}
