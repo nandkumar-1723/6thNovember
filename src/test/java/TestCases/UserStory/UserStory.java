@@ -15,6 +15,7 @@ import java.io.*;
 public class UserStory {
 
     private String cookie;
+    private String issueID;
 
     @Test(priority = 0)
     public void loginJira() throws IOException, ParseException {
@@ -37,7 +38,26 @@ public class UserStory {
     }
 
     @Test(priority = 1)
-    public void createUserStory(){
-        System.out.println(cookie);
+    public void createUserStory() throws IOException, ParseException {
+
+        FileReader fr = new FileReader("src/main/java/Files/userStory.json");
+        JSONParser jp = new JSONParser();
+        String requestBody = jp.parse(fr).toString();
+
+        Response response = RestAssured.given().baseUri("http://localhost:9009").body(requestBody)
+                .header("Cookie", cookie)
+                .contentType(ContentType.JSON).when().post("/rest/api/2/issue")
+                .then().log().all().extract().response();
+
+        JSONObject js = new JSONObject(response.asString());
+       issueID = js.get("key").toString();
+
+    }
+    @Test(priority = 2)
+    public void getUserStory(){
+
+        RestAssured.given().baseUri("http://localhost:9009").header("Cookie",cookie)
+                .contentType(ContentType.JSON).when().get("/rest/api/2/issue/"+issueID)
+                .then().log().all().extract().response();
     }
 }
