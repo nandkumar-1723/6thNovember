@@ -60,4 +60,37 @@ public class UserStory {
                 .contentType(ContentType.JSON).when().get("/rest/api/2/issue/"+issueID)
                 .then().log().all().extract().response();
     }
+
+    @Test(priority = 3)
+    public void updateUserStory() throws IOException, ParseException {
+
+        FileReader fr = new FileReader("src/main/java/Files/userStory.json");
+        JSONParser jp = new JSONParser();
+        String requestBody = jp.parse(fr).toString();
+
+        //to update the user story description
+        JSONObject js = new JSONObject(requestBody);
+        js.getJSONObject("fields").put("summary","i am updatin the user story");
+
+        RestAssured.given().baseUri("http://localhost:9009").body(js.toString()).header("Cookie",cookie)
+                .contentType(ContentType.JSON).when().put("/rest/api/2/issue/"+issueID)
+                .then().log().all().extract().response();
+
+    }
+
+    @Test(priority = 4)
+    public void getUpdatedUserStory(){
+        RestAssured.given().baseUri("http://localhost:9009").header("Cookie",cookie)
+                .contentType(ContentType.JSON).when().get("/rest/api/2/issue/"+issueID)
+                .then().log().all().extract().response();
+    }
+
+    @Test(priority = 5)
+    public void deleteUserStory(){
+        RestAssured.given().baseUri("http://localhost:9009").header("Cookie",cookie)
+                .contentType(ContentType.JSON).when().delete("/rest/api/2/issue/"+issueID)
+                .then().log().all().extract().response();
+
+
+    }
 }
