@@ -3,9 +3,9 @@
     "project": {
       "key": "AM"
     },
-    "summary": "Adding the Bug on the arise amazon project",
+    "summary": "Adding the task on the arise amazon project",
     "issuetype": {
-      "name": "Bug"
+      "name": "Task"
     }
   }
 }

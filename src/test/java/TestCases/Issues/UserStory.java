@@ -1,4 +1,4 @@
-package TestCases.UserStory;
+package TestCases.Issues;
 
 import io.restassured.*;
 import io.restassured.http.*;
