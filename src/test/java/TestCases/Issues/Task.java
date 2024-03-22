@@ -6,8 +6,10 @@ import io.restassured.response.*;
 import org.json.*;
 import org.json.simple.parser.*;
 import org.testng.annotations.*;
+import utils.*;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * @author Nandkumar Babar
@@ -15,15 +17,15 @@ import java.io.*;
 public class Task {
     private String cookie;
     private String issueId;
+    private String url;
 
     @Test(priority = 1)
     public void JiraLogin() throws IOException, ParseException {
 
-        FileReader fr = new FileReader("src/main/java/Files/login.json");
-        JSONParser jp = new JSONParser();
-        String requestBody = jp.parse(fr).toString();
+        String requestBody = common.ReadJsonFile("src/main/java/Files/login.json");
+        url = common.ReadPropFile("url");
 
-        Response response = RestAssured.given().baseUri("http://localhost:9009").body(requestBody)
+        Response response = RestAssured.given().baseUri(url).body(requestBody)
                 .contentType(ContentType.JSON).when().post("/rest/auth/1/session")
                 .then().log().all().extract().response();
 
@@ -33,11 +35,9 @@ public class Task {
 
     @Test(priority = 2)
     public void createTask() throws IOException, ParseException {
-        FileReader fr = new FileReader("src/main/java/Files/Task.json");
-        JSONParser jp = new JSONParser();
-        String requestBody = jp.parse(fr).toString();
+        String requestBody = common.ReadJsonFile("src/main/java/Files/Task.json");
 
-        Response response = RestAssured.given().baseUri("http://localhost:9009").body(requestBody)
+        Response response = RestAssured.given().baseUri(url).body(requestBody)
                 .contentType(ContentType.JSON).header("Cookie", cookie)
                 .when().post("/rest/api/2/issue").then().log().all().extract().response();
 
@@ -46,7 +46,7 @@ public class Task {
     }
     @Test(priority = 3)
     public void getTask(){
-        RestAssured.given().baseUri("http://localhost:9009").contentType(ContentType.JSON)
+        RestAssured.given().baseUri(url).contentType(ContentType.JSON)
                 .header("Cookie",cookie).when().get("/rest/api/2/issue/"+issueId)
                 .then().log().all().extract().response();
 
@@ -54,10 +54,8 @@ public class Task {
 
     @Test(priority = 4)
     public void updateTask() throws IOException, ParseException {
+        String requestBody = common.ReadJsonFile("src/main/java/Files/Task.json");
 
-        FileReader fr = new FileReader("src/main/java/Files/Task.json");
-        JSONParser jp = new JSONParser();
-        String requestBody = jp.parse(fr).toString();
         System.out.println("Origional Request body "+requestBody);
 
         //to update the task summary
@@ -65,14 +63,14 @@ public class Task {
         js.getJSONObject("fields").put("summary","i wants to update the task");
         System.out.println("Actual request body "+js);
 
-        RestAssured.given().baseUri("http://localhost:9009").body(js.toString())
+        RestAssured.given().baseUri(url).body(js.toString())
                 .header("Cookie",cookie).contentType(ContentType.JSON)
                 .when().put("/rest/api/2/issue/"+issueId).then().log().all().extract().response();
     }
 
     @Test(priority = 5)
     public void getUpdatedTask(){
-        RestAssured.given().baseUri("http://localhost:9009").contentType(ContentType.JSON)
+        RestAssured.given().baseUri(url).contentType(ContentType.JSON)
                 .header("Cookie",cookie).when().get("/rest/api/2/issue/"+issueId)
                 .then().log().all().extract().response();
 
@@ -80,7 +78,7 @@ public class Task {
 
     @Test(priority = 6)
     public void deleteTask(){
-        RestAssured.given().baseUri("http://localhost:9009").header("Cookie",cookie)
+        RestAssured.given().baseUri(url).header("Cookie",cookie)
                 .contentType(ContentType.JSON).when().delete("/rest/api/2/issue/"+issueId)
                 .then().log().all().extract().response();
     }
