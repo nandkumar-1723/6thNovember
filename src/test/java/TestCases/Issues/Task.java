@@ -46,7 +46,10 @@ public class Task {
     }
     @Test(priority = 3)
     public void getTask(){
+        // Query parameter
+
         RestAssured.given().baseUri(url).contentType(ContentType.JSON)
+                .queryParam("fields","summary").queryParam("fields","priority")
                 .header("Cookie",cookie).when().get("/rest/api/2/issue/"+issueId)
                 .then().log().all().extract().response();
 
